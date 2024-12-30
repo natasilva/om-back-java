@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Data Container ####
+/order_manager_db/
