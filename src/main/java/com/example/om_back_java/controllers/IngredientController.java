@@ -1,5 +1,7 @@
 package com.example.om_back_java.controllers;
 
+import com.example.om_back_java.dto.IngredientDto;
+import com.example.om_back_java.entities.Ingredient;
 import com.example.om_back_java.entities.Ingredient;
 import com.example.om_back_java.services.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,12 @@ import java.util.List;
 public class IngredientController {
     @Autowired
     private IngredientService ingredientService;
+
+    @PostMapping
+    public ResponseEntity<Ingredient> create(@RequestBody IngredientDto ingredientDTO) {
+        Ingredient ingredient = this.ingredientService.create(ingredientDTO);
+        return new ResponseEntity<>(ingredient, HttpStatus.CREATED);
+    }
 
     @GetMapping
     public ResponseEntity<List<Ingredient>> findAll(@RequestParam(value = "isAdditional", required = false) Boolean isAdditional) {

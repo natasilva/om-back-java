@@ -26,4 +26,12 @@ public class Drink {
 
     @Column()
     private boolean has_sugar;
+
+    public void setUnitPrice(float unitPrice) {
+        this.unit_price = unitPrice;
+    }
+
+    public void setHasSugar(boolean hasSugar) {
+        this.has_sugar = hasSugar;
+    }
 }

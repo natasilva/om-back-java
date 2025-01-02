@@ -1,5 +1,6 @@
 package com.example.om_back_java.services;
 
+import com.example.om_back_java.dto.DrinkDto;
 import com.example.om_back_java.entities.Drink;
 import com.example.om_back_java.repositories.DrinkRepository;
 import jakarta.persistence.EntityManager;
@@ -7,7 +8,9 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +20,19 @@ import java.util.List;
 public class DrinkService {
     @PersistenceContext
     EntityManager entityManager;
+
+    @Transactional
+    public Drink create(DrinkDto drinkDto) {
+        Drink drink = new Drink();
+
+        drink.setHasSugar(drinkDto.isHasSugar());
+        drink.setCode(drinkDto.getCode());
+        drink.setUnitPrice(drinkDto.getUnitPrice());
+        drink.setDescription(drinkDto.getDescription());
+
+        this.entityManager.persist(drink);
+        return drink;
+    }
 
     public List<Drink> findAll() {
         CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
