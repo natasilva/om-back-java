@@ -35,4 +35,8 @@ public class Burger {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "burgerId")
     private Set<BurgerIngredient> burgerIngredients = new HashSet<>();
+
+    public void setUnitPrice(float unitPrice) {
+        this.unit_price = unitPrice;
+    }
 }

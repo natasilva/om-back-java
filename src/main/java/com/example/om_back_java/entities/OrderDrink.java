@@ -21,4 +21,8 @@ public class OrderDrink {
     @ManyToOne
     @JoinColumn(name = "drinkId")
     private Drink drink;
+
+    @ManyToOne
+    @JoinColumn(name = "orderId")
+    private Order order;
 }

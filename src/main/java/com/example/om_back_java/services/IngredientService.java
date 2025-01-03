@@ -2,7 +2,6 @@ package com.example.om_back_java.services;
 
 import com.example.om_back_java.dto.IngredientDto;
 import com.example.om_back_java.entities.Ingredient;
-import com.example.om_back_java.entities.Ingredient;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -46,5 +45,15 @@ public class IngredientService {
         criteriaQuery.where(predicate);
 
         return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
+    public Ingredient findById(Integer id) {
+        CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Ingredient> criteriaQuery = criteriaBuilder.createQuery(Ingredient.class);
+        Root<Ingredient> root = criteriaQuery.from(Ingredient.class);
+
+        Predicate predicate = criteriaBuilder.equal(root.get("id"), id);
+        criteriaQuery.where(predicate);
+        return entityManager.createQuery(criteriaQuery).getSingleResult();
     }
 }

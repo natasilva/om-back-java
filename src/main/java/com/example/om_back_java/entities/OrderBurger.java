@@ -21,4 +21,8 @@ public class OrderBurger {
     @ManyToOne
     @JoinColumn(name = "burgerId")
     private Burger burger;
+
+    @ManyToOne
+    @JoinColumn(name = "orderId")
+    private Order order;
 }
