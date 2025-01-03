@@ -1,6 +1,7 @@
 package com.example.om_back_java.services;
 
 import com.example.om_back_java.dto.IngredientDto;
+import com.example.om_back_java.entities.Drink;
 import com.example.om_back_java.entities.Ingredient;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @Service
@@ -24,7 +26,7 @@ public class IngredientService {
     public Ingredient create(IngredientDto ingredientDto) {
         Ingredient ingredient = new Ingredient();
 
-        ingredient.setIsAdditional(ingredientDto.isAdditional());
+        ingredient.setIsAdditional(ingredientDto.getIsAdditional());
         ingredient.setCode(ingredientDto.getCode());
         ingredient.setUnitPrice(ingredientDto.getUnitPrice());
         ingredient.setDescription(ingredientDto.getDescription());
@@ -33,7 +35,7 @@ public class IngredientService {
         return ingredient;
     }
 
-    public List<Ingredient> findAll(Boolean isAdditional) {
+    public List<Ingredient> findAll(Boolean isAdditional, Set<Long> ingredientIds) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 
         CriteriaQuery<Ingredient> criteriaQuery = criteriaBuilder.createQuery(Ingredient.class);
@@ -41,8 +43,9 @@ public class IngredientService {
         Root<Ingredient> root = criteriaQuery.from(Ingredient.class);
 
         Predicate predicate = isAdditional != null ? criteriaBuilder.equal(root.get("is_additional"), isAdditional) : criteriaBuilder.conjunction();
+        Predicate predicate2 = !ingredientIds.isEmpty() ? root.get("id").in(ingredientIds) : criteriaBuilder.conjunction();
 
-        criteriaQuery.where(predicate);
+        criteriaQuery.where(predicate, predicate2);
 
         return entityManager.createQuery(criteriaQuery).getResultList();
     }

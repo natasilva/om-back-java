@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/ingredients")
@@ -25,7 +27,7 @@ public class IngredientController {
 
     @GetMapping
     public ResponseEntity<List<Ingredient>> findAll(@RequestParam(value = "isAdditional", required = false) Boolean isAdditional) {
-        List<Ingredient> ingredients = this.ingredientService.findAll(isAdditional);
+        List<Ingredient> ingredients = this.ingredientService.findAll(isAdditional, new HashSet<>());
         return new ResponseEntity<>(ingredients, HttpStatus.OK);
     }
 }

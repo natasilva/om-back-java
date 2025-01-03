@@ -7,7 +7,9 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -44,7 +46,7 @@ public class Order {
 
     @Column(name="notes")
     @ElementCollection
-    private Set<String> notes = new HashSet<>();
+    private List<String> notes = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "drinkId")

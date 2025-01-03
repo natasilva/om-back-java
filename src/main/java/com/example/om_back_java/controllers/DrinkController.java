@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -24,7 +25,7 @@ public class DrinkController {
 
     @GetMapping
     public ResponseEntity<List<Drink>> findAll() {
-        List<Drink> drinks = this.drinkService.findAll();
+        List<Drink> drinks = this.drinkService.findAll(new HashSet<>());
         return new ResponseEntity<>(drinks, HttpStatus.OK);
     }
 }

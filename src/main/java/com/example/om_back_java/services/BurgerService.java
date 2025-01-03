@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
@@ -40,9 +41,7 @@ public class BurgerService {
         burger.setDescription(burgerDto.getDescription());
         burger.setUnitPrice(burgerDto.getUnitPrice());
 
-        BurgerIngredientDto[] burgerIngredientsDto = burgerDto.getBurgerIngredients();
-
-        Set<BurgerIngredient> burgerIngredients = Arrays.stream(burgerIngredientsDto)
+        Set<BurgerIngredient> burgerIngredients = Arrays.stream(burgerDto.getBurgerIngredients())
                 .map(burgerIngredientDto -> {
                     Ingredient ingredient = this.ingredientService.findById(burgerIngredientDto.getIngredientId());
                     if (ingredient == null)
@@ -57,11 +56,22 @@ public class BurgerService {
         return burger;
     }
 
-    public List<Burger> findAll() {
+    public List<Burger> findAll(Set<Long> burgerIds) {
         CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<Burger> criteriaQuery = criteriaBuilder.createQuery(Burger.class);
         Root<Burger> root = criteriaQuery.from(Burger.class);
+        CriteriaQuery<Burger> finalQuery = criteriaQuery.select(root).where(!burgerIds.isEmpty() ? root.get("id").in(burgerIds) : criteriaBuilder.conjunction());
 
-        return entityManager.createQuery(criteriaQuery.select(root)).getResultList();
+        return entityManager.createQuery(finalQuery).getResultList();
+    }
+
+    public Burger findById(Integer id) {
+        CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Burger> criteriaQuery = criteriaBuilder.createQuery(Burger.class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+
+        Predicate predicate = criteriaBuilder.equal(root.get("id"), id);
+        criteriaQuery.where(predicate);
+        return entityManager.createQuery(criteriaQuery).getSingleResult();
     }
 }

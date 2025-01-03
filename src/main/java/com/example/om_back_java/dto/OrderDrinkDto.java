@@ -1,5 +1,4 @@
 package com.example.om_back_java.dto;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,9 +6,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DrinkDto {
-    private String code;
-    private String description;
-    private float unitPrice;
-    private Boolean hasSugar;
+public class OrderDrinkDto {
+    private Long drinkId;
+    private Integer quantity;
 }

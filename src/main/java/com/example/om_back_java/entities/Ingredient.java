@@ -25,7 +25,7 @@ public class Ingredient {
     private float unit_price;
 
     @Column()
-    private boolean is_additional;
+    private Boolean is_additional;
 
     public void setUnitPrice(float unitPrice) {
         this.unit_price = unitPrice;

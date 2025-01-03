@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DrinkDto {
-    private String code;
-    private String description;
-    private float unitPrice;
-    private Boolean hasSugar;
+public class OrderAdditionalDto {
+    private Long ingredientId;
+    private Integer quantity;
 }

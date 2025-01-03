@@ -11,5 +11,5 @@ public class IngredientDto {
     private String code;
     private String description;
     private float unitPrice;
-    private boolean isAdditional;
+    private Boolean isAdditional;
 }
