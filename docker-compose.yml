@@ -19,16 +19,9 @@ services:
     image: om-back-java
     container_name: order-manager-back-java
     ports:
-      - "3000:3000"
+      - "8080:8080"
     depends_on:
       - order-manager-db
-    environment:
-      TYPEORM_HOST: order-manager-db
-      TYPEORM_PORT: 5432
-      TYPEORM_USERNAME: postgres
-      TYPEORM_PASSWORD: p0stgr3s
-      TYPEORM_DATABASE: order-manager-db
-      NODE_ENV: production
     networks:
       - order-manager-network
 
