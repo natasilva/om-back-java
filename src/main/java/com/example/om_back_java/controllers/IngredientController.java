@@ -27,7 +27,7 @@ public class IngredientController {
 
     @GetMapping
     public ResponseEntity<List<Ingredient>> findAll(@RequestParam(value = "isAdditional", required = false) Boolean isAdditional) {
-        List<Ingredient> ingredients = this.ingredientService.findAll(isAdditional, new HashSet<>());
+        List<Ingredient> ingredients = this.ingredientService.findAll(isAdditional, new HashSet<>(), true);
         return new ResponseEntity<>(ingredients, HttpStatus.OK);
     }
 }

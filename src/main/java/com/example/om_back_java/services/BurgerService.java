@@ -65,10 +65,10 @@ public class BurgerService {
         return entityManager.createQuery(finalQuery).getResultList();
     }
 
-    public Burger findById(Integer id) {
+    public Burger findById(Long id) {
         CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<Burger> criteriaQuery = criteriaBuilder.createQuery(Burger.class);
-        Root<Order> root = criteriaQuery.from(Order.class);
+        Root<Burger> root = criteriaQuery.from(Burger.class);
 
         Predicate predicate = criteriaBuilder.equal(root.get("id"), id);
         criteriaQuery.where(predicate);

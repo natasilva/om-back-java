@@ -17,6 +17,7 @@ public class OrderBurger {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @Column(nullable = false)
     private Integer quantity;
 
@@ -24,7 +25,7 @@ public class OrderBurger {
     @JoinColumn(name = "burgerId")
     private Burger burger;
 
-    @ManyToOne
-    @JoinColumn(name = "orderId")
-    private Order order;
+//    @ManyToOne
+//    @JoinColumn(name = "orderId")
+//    private Order order;
 }

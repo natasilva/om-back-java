@@ -35,7 +35,7 @@ public class IngredientService {
         return ingredient;
     }
 
-    public List<Ingredient> findAll(Boolean isAdditional, Set<Long> ingredientIds) {
+    public List<Ingredient> findAll(Boolean isAdditional, Set<Long> ingredientIds, Boolean findAll) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 
         CriteriaQuery<Ingredient> criteriaQuery = criteriaBuilder.createQuery(Ingredient.class);
@@ -43,7 +43,7 @@ public class IngredientService {
         Root<Ingredient> root = criteriaQuery.from(Ingredient.class);
 
         Predicate predicate = isAdditional != null ? criteriaBuilder.equal(root.get("is_additional"), isAdditional) : criteriaBuilder.conjunction();
-        Predicate predicate2 = !ingredientIds.isEmpty() ? root.get("id").in(ingredientIds) : criteriaBuilder.conjunction();
+        Predicate predicate2 = !findAll ? root.get("id").in(ingredientIds) : criteriaBuilder.conjunction();
 
         criteriaQuery.where(predicate, predicate2);
 

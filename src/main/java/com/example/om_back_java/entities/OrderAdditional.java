@@ -24,7 +24,7 @@ public class OrderAdditional {
     @JoinColumn(name = "ingredientId")
     private Ingredient ingredient;
 
-    @ManyToOne
-    @JoinColumn(name = "orderId")
-    private Order order;
+//    @ManyToOne
+//    @JoinColumn(name = "orderId")
+//    private Order order;
 }

@@ -24,7 +24,7 @@ public class OrderDrink {
     @JoinColumn(name = "drinkId")
     private Drink drink;
 
-    @ManyToOne
-    @JoinColumn(name = "orderId")
-    private Order order;
+//    @ManyToOne
+//    @JoinColumn(name = "orderId")
+//    private Order order;
 }

@@ -1,6 +1,7 @@
 package com.example.om_back_java.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,11 +13,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Entity
+@Table(name = "\"order\"")
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
-@Table(name = "\"order\"")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,38 +27,42 @@ public class Order {
     @Column(unique = true)
     private String code;
 
-    @Column()
+    @Column
     private String description;
 
-    @Column()
+    @Column
     private float value;
 
-    @Column()
+    @Column
     private String name;
 
-    @Column()
+    @Column
     private String phone;
 
     @Embedded
     private Address address;
 
-    @CreationTimestamp
-    @Column(name = "orderDate")
-    private LocalDateTime orderDate;
+//    @CreationTimestamp
+    @Column(name = "order_date")
+    private LocalDateTime order_date;
 
-    @Column(name="notes")
     @ElementCollection
+    @CollectionTable(name = "order_notes", joinColumns = @JoinColumn(name = "orderId"))
+    @Column(name = "notes")
     private List<String> notes = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "drinkId")
+    // Relação bidirecional com OrderDrink
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Set<OrderDrink> orderDrinks = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "ingredientId")
+    // Relação bidirecional com OrderAdditional
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Set<OrderAdditional> orderAdditionals = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "burgerId")
+    // Relação bidirecional com OrderBurger
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Set<OrderBurger> orderBurgers = new HashSet<>();
 }
